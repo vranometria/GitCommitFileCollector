@@ -38,6 +38,8 @@ namespace GitCommitFileCollector
 
         public bool DirectorySelected => Directory.Exists(AppData.TargetDirectory);
 
+        public string TargetDirectory => AppData.TargetDirectory;
+
         public void SetTargetDirectory(string path)
         {
             AppData.TargetDirectory = path;

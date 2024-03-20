@@ -8,6 +8,6 @@ namespace GitCommitFileCollector
 {
     public class AppData
     {
-        public string TargetDirectory { get; set; }
+        public string TargetDirectory { get; set; } = "";
     }
 }

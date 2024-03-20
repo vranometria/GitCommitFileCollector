@@ -7,7 +7,6 @@
         mc:Ignorable="d"
         Title="Git Commit File Collector" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
-        <StackPanel Margin="10,10,10,10"/>
-        
+        <ListBox x:Name="CommitViewArea" Height="414" VerticalAlignment="Top" Margin="10,10,10,0"/>
     </Grid>
 </Window>

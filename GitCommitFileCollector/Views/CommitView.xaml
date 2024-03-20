@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="GitCommitFileCollector.Views.CommitView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GitCommitFileCollector.Views"
+             mc:Ignorable="d" Loaded="UserControl_Loaded" Height="73" Width="676">
+    <Grid>
+        <Label x:Name="ShaLabel" Content="SHA 40桁 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" HorizontalAlignment="Left" Height="27" Margin="10,10,0,0" VerticalAlignment="Top" Width="311"/>
+        <Label x:Name="CommitCommentLabel" Content="コミットコメント" HorizontalAlignment="Center" Height="27" Margin="0,42,0,0" VerticalAlignment="Top" Width="656"/>
+        <Label x:Name="DateLabel" Content="yyyy/mm/dd" HorizontalAlignment="Left" Height="27" Margin="326,10,0,0" VerticalAlignment="Top" Width="83"/>
+        <Label x:Name="AuthorLabel" Content="author" Height="27" Margin="414,10,10,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</UserControl>
