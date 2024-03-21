@@ -21,7 +21,7 @@ namespace GitCommitFileCollector.Views
     /// </summary>
     public partial class CommitView : UserControl
     {
-        private Commit? Commit { get; set; }
+        public Commit? Commit { get; private set; }
 
         public CommitView()
         {

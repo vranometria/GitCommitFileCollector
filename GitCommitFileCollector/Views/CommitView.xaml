@@ -6,10 +6,10 @@
              xmlns:local="clr-namespace:GitCommitFileCollector.Views"
              mc:Ignorable="d" Loaded="UserControl_Loaded" Height="73" Width="676">
     <Grid>
-        <Label x:Name="ShaLabel" Content="SHA 40桁 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" HorizontalAlignment="Left" Height="27" Margin="10,10,0,0" VerticalAlignment="Top" Width="311"/>
+        <Label x:Name="ShaLabel" Content="SHA 40桁 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" HorizontalAlignment="Left" Height="27" Margin="10,10,0,0" VerticalAlignment="Top" Width="302"/>
         <Label x:Name="CommitCommentLabel" Content="コミットコメント" HorizontalAlignment="Center" Height="27" Margin="0,42,0,0" VerticalAlignment="Top" Width="656"/>
-        <Label x:Name="DateLabel" Content="yyyy/mm/dd" HorizontalAlignment="Left" Height="27" Margin="326,10,0,0" VerticalAlignment="Top" Width="83"/>
-        <Label x:Name="AuthorLabel" Content="author" Height="27" Margin="414,10,10,0" VerticalAlignment="Top"/>
+        <Label x:Name="DateLabel" Content="yyyy/mm/dd" HorizontalAlignment="Left" Height="27" Margin="312,10,0,0" VerticalAlignment="Top" Width="77"/>
+        <Label x:Name="AuthorLabel" Content="author" Height="26" Margin="389,10,10,0" VerticalAlignment="Top"/>
 
     </Grid>
 </UserControl>

@@ -1,12 +1,39 @@
-﻿<Window x:Class="GitCommitFileCollector.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GitCommitFileCollector"
+        xmlns:Views="clr-namespace:GitCommitFileCollector.Views" xmlns:Models="clr-namespace:GitCommitFileCollector.Models" x:Class="GitCommitFileCollector.MainWindow"
         mc:Ignorable="d"
-        Title="Git Commit File Collector" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="Git Commit File Collector" Height="574" Width="1079" Loaded="Window_Loaded">
     <Grid>
-        <ListBox x:Name="CommitViewArea" Height="414" VerticalAlignment="Top" Margin="10,10,10,0"/>
+        <ListBox x:Name="CommitViewArea" Margin="10,10,285,0" SelectionChanged="CommitViewArea_SelectionChanged" Height="269" VerticalAlignment="Top"/>
+        <GroupBox x:Name="FileList" Header="Commited Files" Margin="10,0,285,10" Height="247" VerticalAlignment="Bottom">
+            <Grid>
+                <CheckBox x:Name="AllCheck" Checked="AllCheck_Checked" Unchecked="AllCheck_Unchecked" Content="全てチェック"/>
+                <ListView x:Name="CommitFileList" d:ItemsSource="{d:SampleData ItemCount=5}" Height="184">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Check">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox x:Name="CommitFileSelector" IsChecked="{Binding IsChecked}" Checked="CommitFileSelector_Checked" Unchecked="CommitFileSelector_Unchecked"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="File Path">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding FilePath}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="ExtractGroupArea" Header="Selected Items" Margin="799,10,0,10" HorizontalAlignment="Left" Width="270"/>
     </Grid>
 </Window>
