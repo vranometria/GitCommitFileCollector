@@ -13,6 +13,7 @@ using LibGit2Sharp;
 using Forms = System.Windows.Forms;
 using GitCommitFileCollector.Views;
 using GitCommitFileCollector.Models;
+using System.Diagnostics;
 
 namespace GitCommitFileCollector
 {
@@ -197,7 +198,9 @@ namespace GitCommitFileCollector
                     string fileName = Path.GetFileName(path);
                     File.Copy(source, Path.Combine(directoryPath, fileName));
                 });
-            }); 
+            });
+
+            Process.Start("explorer", now);
         }
 
         private void KeywordTextBox_KeyDown(object sender, KeyEventArgs e)
