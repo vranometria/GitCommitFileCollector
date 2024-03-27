@@ -8,11 +8,12 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
+using System.IO;
 using LibGit2Sharp;
 using Forms = System.Windows.Forms;
 using GitCommitFileCollector.Views;
 using GitCommitFileCollector.Models;
+using System.IO;
 
 namespace GitCommitFileCollector
 {
@@ -171,6 +172,30 @@ namespace GitCommitFileCollector
             }
 
             ShowExtractFileGroup();
+        }
+
+        private void CollectButton_Click(object sender, RoutedEventArgs e)
+        {
+            //選択ファイルが0件の場合は処理しない
+            if (ExtractFileGroups.Count == 0) { return; }
+
+            string now = DateTime.Now.ToString("yyyyMMddHHmmss");
+
+            ExtractFileGroups.Keys.ToList().ForEach(sha =>
+            {
+                var group = ExtractFileGroups[sha];
+                var commit = Repository.Lookup<Commit>(sha);
+                Commands.Checkout(Repository, commit);
+                group.FilePaths.ForEach(path =>
+                {
+                    string directoryPath = Path.Combine(now, Path.GetDirectoryName(path));
+                    if (!Directory.Exists(directoryPath)) { Directory.CreateDirectory(directoryPath); }
+
+                    string source = Path.Combine(AppDataManager.TargetDirectory, path);
+                    string fileName = Path.GetFileName(path);
+                    File.Copy(source, Path.Combine(directoryPath, fileName));
+                });
+            }); 
         }
     }
 }
