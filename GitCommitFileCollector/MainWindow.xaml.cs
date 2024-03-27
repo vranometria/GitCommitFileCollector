@@ -13,7 +13,6 @@ using LibGit2Sharp;
 using Forms = System.Windows.Forms;
 using GitCommitFileCollector.Views;
 using GitCommitFileCollector.Models;
-using System.IO;
 
 namespace GitCommitFileCollector
 {
@@ -101,6 +100,8 @@ namespace GitCommitFileCollector
         /// <param name="e"></param>
         private void CommitViewArea_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if(Repository == null) { return; }
+
             Commit? commit = (CommitViewArea.SelectedItem as CommitView)?.Commit;
             if (commit == null) { return; }
 
@@ -114,7 +115,7 @@ namespace GitCommitFileCollector
             }
 
 
-            CommitFileList.ItemsSource = Utils.GetListFiles(commit).Select( file => 
+            CommitFileList.ItemsSource = Utils.GetListFiles(Repository, commit).Select( file => 
                 new FileListItem()
                 {
                     FilePath = file,

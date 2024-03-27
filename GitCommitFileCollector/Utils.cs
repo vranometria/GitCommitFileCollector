@@ -4,31 +4,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.Design;
 
 namespace GitCommitFileCollector
 {
     public static class Utils
     {
-        public static List<string> GetListFiles(Commit commit) => ListFiles(commit.Tree, "");
-
-        private static List<string> ListFiles(Tree tree, string pathPrefix)
+        /// <summary>
+        /// コミットに含まれるファイル一覧を取得
+        /// </summary>
+        /// <param name="commit"></param>
+        /// <returns></returns>
+        public static List<string> GetListFiles(Repository repository, Commit commit)
         {
-            List<string> files = new();
-            foreach (var entry in tree)
+            TreeChanges changes;
+            if (commit.Parents.Count() > 0)
             {
-                if (entry.TargetType == TreeEntryTargetType.Blob)
-                {
-                    files.Add($"{pathPrefix}{entry.Name}");
-                }
-                else if(entry.TargetType == TreeEntryTargetType.Tree)
-                {
-                    var t = ListFiles((Tree)entry.Target, $"{pathPrefix}{entry.Name}\\");
-                    files.AddRange(t);
-                }
+                var parent = commit.Parents.First();
+                changes = repository.Diff.Compare<TreeChanges>(parent.Tree, commit.Tree);
             }
-            return files;
-        }
+            else
+            {
+                var emptyTree = repository.ObjectDatabase.CreateTree(new TreeDefinition());
+                changes = repository.Diff.Compare<TreeChanges>(emptyTree, commit.Tree);
+            }
 
+            return changes.Select(c => c.Path).ToList();
+        }
 
     }
 }
