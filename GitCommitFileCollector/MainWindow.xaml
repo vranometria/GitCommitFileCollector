@@ -8,8 +8,8 @@
         mc:Ignorable="d"
         Title="Git Commit File Collector" Height="574" Width="1079" Loaded="Window_Loaded">
     <Grid>
-        <ListBox x:Name="CommitViewArea" Margin="10,10,285,0" SelectionChanged="CommitViewArea_SelectionChanged" Height="269" VerticalAlignment="Top"/>
-        <GroupBox x:Name="FileList" Header="Commited Files" Margin="10,0,285,10" Height="247" VerticalAlignment="Bottom">
+        <ListBox x:Name="CommitViewArea" Margin="10,50,0,0" SelectionChanged="CommitViewArea_SelectionChanged" Height="229" VerticalAlignment="Top" HorizontalAlignment="Left" Width="784"/>
+        <GroupBox x:Name="FileList" Header="Commited Files" Margin="10,0,0,10" Height="247" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="784">
             <Grid>
                 <CheckBox x:Name="AllCheck" Checked="AllCheck_Checked" Unchecked="AllCheck_Unchecked" Content="全てチェック"/>
                 <ListView x:Name="CommitFileList" d:ItemsSource="{d:SampleData ItemCount=5}" Height="184">
@@ -34,9 +34,13 @@
                 </ListView>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Selected Items" Margin="0,10,10,79" HorizontalAlignment="Right" Width="270">
+        <GroupBox Header="Selected Items" Margin="0,10,10,79" HorizontalAlignment="Right" Width="257">
             <StackPanel x:Name="ExtractFileGroupArea"  ></StackPanel>
         </GroupBox>
         <Button x:Name="CollectButton" Content="収集" Background="White" Margin="0,0,10,10" Height="41" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="106" Click="CollectButton_Click"/>
+        <Grid HorizontalAlignment="Left" Height="35" Margin="10,10,0,0" VerticalAlignment="Top" Width="784">
+            <Label Content="keyword" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBox x:Name="KeywordTextBox" HorizontalAlignment="Left" Margin="60,8,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="271" KeyDown="KeywordTextBox_KeyDown"/>
+        </Grid>
     </Grid>
 </Window>

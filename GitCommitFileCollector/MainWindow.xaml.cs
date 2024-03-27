@@ -44,7 +44,7 @@ namespace GitCommitFileCollector
         {
             InitTargeDirectory();
 
-            ShowCommits();
+            ShowAllCommits();
         }
 
         /// <summary>
@@ -64,11 +64,12 @@ namespace GitCommitFileCollector
         }
 
         /// <summary>
-        /// コミット情報を表示
+        /// コミット情報を全て列挙する
         /// </summary>
-        private void ShowCommits()
+        private void ShowAllCommits()
         {
             if(Repository == null) { return; }
+            CommitViewArea.Items.Clear();
             Repository.Commits.Select(commit => new CommitView(commit)).ToList().ForEach( commitView => {
                 CommitViewArea.Items.Add(commitView);
             });
@@ -196,6 +197,25 @@ namespace GitCommitFileCollector
                     File.Copy(source, Path.Combine(directoryPath, fileName));
                 });
             }); 
+        }
+
+        private void KeywordTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                string keyword = KeywordTextBox.Text;
+                if (string.IsNullOrEmpty(keyword)) 
+                {
+                    ShowAllCommits();
+                    return; 
+                }
+
+                CommitViewArea.Items.Clear();
+                Repository?.Commits.Where(commit => commit.Message.Contains(keyword)).Select(commit => new CommitView(commit)).ToList().ForEach(commitView =>
+                {
+                    CommitViewArea.Items.Add(commitView);
+                });
+            }
         }
     }
 }
