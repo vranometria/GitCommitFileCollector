@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:GitCommitFileCollector.Views"
              mc:Ignorable="d" Width="488">
     <Grid x:Name="FileArea">
-        <Label x:Name="ShaLabel" Content="xxxxxxxxxxxxxxxxx" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="488"/>
-        <StackPanel Margin="42,33,0,0" MinHeight="50"/>
+        <Label x:Name="ShaLabel" Content="{Binding Sha}" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="488"/>
+        <StackPanel x:Name="FileList" Margin="42,33,0,0" MinHeight="50"/>
     </Grid>
 </UserControl>

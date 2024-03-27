@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -26,7 +25,9 @@ namespace GitCommitFileCollector
 
         private Repository? Repository { get; set; }
 
-        private SelectedItemInfo SelectedItem { get; set; } = new SelectedItemInfo();
+        private Commit? CurrentClickedCommit { get; set; } 
+
+        public Dictionary<string, ExtractFileGroup> ExtractFileGroups { get; set; } = new Dictionary<string, ExtractFileGroup>();
 
         public MainWindow()
         {
@@ -88,10 +89,17 @@ namespace GitCommitFileCollector
             CommitFileList.ItemsSource = source;
         }
 
+        /// <summary>
+        /// 選択コミット変更時イベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommitViewArea_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Commit? commit = (CommitViewArea.SelectedItem as CommitView)?.Commit;
             if (commit == null) { return; }
+
+            CurrentClickedCommit = commit;
 
             CommitFileList.ItemsSource = Utils.GetListFiles(commit).Select( file => 
                 new FileListItem()
@@ -110,6 +118,22 @@ namespace GitCommitFileCollector
 
         private void CommitFileSelector_Checked(object sender, RoutedEventArgs e)
         {
+            if (CurrentClickedCommit == null) { return; }
+
+            CheckBox checkbox = (CheckBox) sender;
+            string sha = CurrentClickedCommit.Sha;
+            ExtractFileGroup group = ExtractFileGroups.ContainsKey(sha) ? ExtractFileGroups[sha] : new ExtractFileGroup(sha);
+            string path = (string) checkbox.Content;
+            group.Add(path);
+            ExtractFileGroups[sha] = group;
+
+            ExtractFileGroupArea.Children.Clear();
+            ExtractFileGroups.Keys.ToList().ForEach(sha =>
+            {
+                var g = ExtractFileGroups[sha];
+                ExtractFileGroupArea.Children.Add(new ExtractFileGroupView(g));
+            });
+
 
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GitCommitFileCollector.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,5 +25,17 @@ namespace GitCommitFileCollector.Views
         {
             InitializeComponent();
         }
+
+        public ExtractFileGroupView(ExtractFileGroup g): this()
+        {
+            DataContext = g;
+            g.FilePaths.ForEach(f =>
+            {
+                var label = new Label { Content = f, Width = double.NaN };
+                FileList.Children.Add( label );
+            });
+        }
+
+
     }
 }

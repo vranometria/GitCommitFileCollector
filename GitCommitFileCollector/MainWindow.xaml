@@ -34,6 +34,8 @@
                 </ListView>
             </Grid>
         </GroupBox>
-        <GroupBox x:Name="ExtractGroupArea" Header="Selected Items" Margin="799,10,0,10" HorizontalAlignment="Left" Width="270"/>
+        <GroupBox Header="Selected Items" Margin="0,10,10,10" HorizontalAlignment="Right" Width="270">
+            <StackPanel x:Name="ExtractFileGroupArea"  ></StackPanel>
+        </GroupBox>
     </Grid>
 </Window>
