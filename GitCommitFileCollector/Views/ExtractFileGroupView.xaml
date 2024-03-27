@@ -4,9 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GitCommitFileCollector.Views"
-             mc:Ignorable="d" Width="488">
+             mc:Ignorable="d" Width="488" MinHeight="50" Height="auto">
     <Grid x:Name="FileArea">
         <Label x:Name="ShaLabel" Content="{Binding Sha}" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="488"/>
-        <StackPanel x:Name="FileList" Margin="42,33,0,0" MinHeight="50"/>
+        <StackPanel x:Name="FileList" Margin="42,33,0,0" MinHeight="50" Height="auto"/>
     </Grid>
 </UserControl>

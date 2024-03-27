@@ -27,6 +27,9 @@ namespace GitCommitFileCollector
 
         private Commit? CurrentClickedCommit { get; set; } 
 
+        /// <summary>
+        /// 抽出対象として選択したファイルのコミット単位のグループ
+        /// </summary>
         public Dictionary<string, ExtractFileGroup> ExtractFileGroups { get; set; } = new Dictionary<string, ExtractFileGroup>();
 
         public MainWindow()
@@ -101,15 +104,33 @@ namespace GitCommitFileCollector
 
             CurrentClickedCommit = commit;
 
+            List<string> filePathes = new List<string>();
+            if (ExtractFileGroups.ContainsKey(commit.Sha)) 
+            {
+                var group = ExtractFileGroups[commit.Sha];
+                filePathes = group.FilePaths;
+            }
+
+
             CommitFileList.ItemsSource = Utils.GetListFiles(commit).Select( file => 
                 new FileListItem()
                 {
                     FilePath = file,
-                    IsChecked = false,
+                    IsChecked = filePathes.Contains(file),
                     Sha = commit.Sha,
                     DateTimeOffset = commit.Committer.When,
                 }
             );
+        }
+
+        private void ShowExtractFileGroup() 
+        {
+            ExtractFileGroupArea.Children.Clear();
+            ExtractFileGroups.Keys.ToList().ForEach(sha =>
+            {
+                var g = ExtractFileGroups[sha];
+                ExtractFileGroupArea.Children.Add(new ExtractFileGroupView(g));
+            });
         }
 
         private void AllCheck_Checked(object sender, RoutedEventArgs e) => ChangeAllFileListCheckState(true);
@@ -123,23 +144,33 @@ namespace GitCommitFileCollector
             CheckBox checkbox = (CheckBox) sender;
             string sha = CurrentClickedCommit.Sha;
             ExtractFileGroup group = ExtractFileGroups.ContainsKey(sha) ? ExtractFileGroups[sha] : new ExtractFileGroup(sha);
-            string path = (string) checkbox.Content;
+            string path = ((FileListItem) checkbox.DataContext).FilePath;
             group.Add(path);
             ExtractFileGroups[sha] = group;
 
-            ExtractFileGroupArea.Children.Clear();
-            ExtractFileGroups.Keys.ToList().ForEach(sha =>
-            {
-                var g = ExtractFileGroups[sha];
-                ExtractFileGroupArea.Children.Add(new ExtractFileGroupView(g));
-            });
-
-
+            ShowExtractFileGroup();
         }
 
         private void CommitFileSelector_Unchecked(object sender, RoutedEventArgs e)
         {
+            if (CurrentClickedCommit == null) { return; }
 
+            string sha = CurrentClickedCommit.Sha;
+            ExtractFileGroup group = ExtractFileGroups[sha];
+
+            CheckBox checkbox = (CheckBox)sender;
+            string path = ((FileListItem)checkbox.DataContext).FilePath;
+            group.Remove(path);
+            if (group.IsEmpty)
+            {
+                ExtractFileGroups.Remove(sha);
+            }
+            else
+            {
+                ExtractFileGroups[sha] = group;
+            }
+
+            ShowExtractFileGroup();
         }
     }
 }
