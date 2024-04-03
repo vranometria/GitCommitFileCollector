@@ -36,7 +36,6 @@ namespace GitCommitFileCollector
         public MainWindow()
         {
             AppDataManager = AppDataManager.Instance;
-
             InitializeComponent();
         }
 
@@ -69,6 +68,8 @@ namespace GitCommitFileCollector
         private void ShowAllCommits()
         {
             if(Repository == null) { return; }
+
+            Commands.Checkout(Repository, Repository.Head.Tip);
             CommitViewArea.Items.Clear();
             Repository.Commits.Select(commit => new CommitView(commit)).ToList().ForEach( commitView => {
                 CommitViewArea.Items.Add(commitView);
@@ -191,7 +192,7 @@ namespace GitCommitFileCollector
                 Commands.Checkout(Repository, commit);
                 group.FilePaths.ForEach(path =>
                 {
-                    string directoryPath = Path.Combine(now, Path.GetDirectoryName(path));
+                    string directoryPath = Path.Combine(now, $"{Path.GetDirectoryName(path)}");
                     if (!Directory.Exists(directoryPath)) { Directory.CreateDirectory(directoryPath); }
 
                     string source = Path.Combine(AppDataManager.TargetDirectory, path);
@@ -200,6 +201,7 @@ namespace GitCommitFileCollector
                 });
             });
 
+            //終了を知らせるために出力フォルダを開く
             Process.Start("explorer", now);
         }
 
