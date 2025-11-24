@@ -40,7 +40,11 @@
         <Button x:Name="CollectButton" Content="収集" Background="White" Margin="0,0,10,10" Height="41" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="106" Click="CollectButton_Click"/>
         <Grid HorizontalAlignment="Left" Height="35" Margin="10,10,0,0" VerticalAlignment="Top" Width="784">
             <Label Content="keyword" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBox x:Name="KeywordTextBox" HorizontalAlignment="Left" Margin="60,8,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="271" KeyDown="KeywordTextBox_KeyDown"/>
+            <TextBox x:Name="KeywordTextBox" HorizontalAlignment="Left" Margin="60,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="209" KeyDown="KeywordTextBox_KeyDown"/>
+            <ComboBox x:Name="BranchSelector" HorizontalAlignment="Left" Height="18" Margin="605,0,0,0" VerticalAlignment="Center" Width="169" SelectionChanged="BranchSelector_SelectionChanged"/>
+            <Label Content="Commiter" HorizontalAlignment="Left" Height="25" Margin="327,0,0,0" VerticalAlignment="Top" Width="65"/>
+            <TextBox x:Name="CommiterFilterTextBox" HorizontalAlignment="Left" Height="18" Margin="397,4,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="114" TextChanged="CommiterFilterTextBox_TextChanged" KeyDown="CommiterFilterTextBox_KeyDown"/>
         </Grid>
+        <MediaElement x:Name="Loading" Source="loading.gif" LoadedBehavior="Play" UnloadedBehavior="Stop" Margin="546,252,429,208" Visibility="Hidden"/>
     </Grid>
 </Window>
